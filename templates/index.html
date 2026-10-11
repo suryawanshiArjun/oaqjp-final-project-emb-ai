@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emotion Detection</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 760px; margin: 48px auto; padding: 0 20px; color: #172033; background: #f5f7fb; }
+    main { background: white; padding: 28px; border-radius: 14px; box-shadow: 0 6px 24px #17203312; }
+    h1 { margin-top: 0; } textarea { box-sizing: border-box; width: 100%; min-height: 120px; padding: 12px; border: 1px solid #cbd2df; border-radius: 8px; font: inherit; }
+    button { margin-top: 12px; border: 0; border-radius: 8px; padding: 12px 18px; background: #2457d6; color: white; font-weight: bold; cursor: pointer; }
+    .error { background: #fff0f0; border-left: 4px solid #c62828; padding: 12px; margin-top: 18px; }
+    .result { background: #effaf3; border-left: 4px solid #21844a; padding: 14px; margin-top: 18px; }
+    li { margin: 6px 0; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Emotion Detection</h1>
+  <p>Enter a sentence to identify its emotions using the Watson NLP service.</p>
+  <form method="post">
+    <label for="text_to_analyze">Text to analyze</label>
+    <textarea id="text_to_analyze" name="text_to_analyze" placeholder="Type a sentence...">{{ text }}</textarea>
+    <button type="submit">Analyze emotion</button>
+  </form>
+  {% if error %}<div class="error" role="alert">{{ error }}</div>{% endif %}
+  {% if result %}
+  <section class="result" aria-live="polite">
+    <h2>Analysis result</h2>
+    <ul>
+      <li>Anger: {{ '%.4f'|format(result.anger) }}</li>
+      <li>Disgust: {{ '%.4f'|format(result.disgust) }}</li>
+      <li>Fear: {{ '%.4f'|format(result.fear) }}</li>
+      <li>Joy: {{ '%.4f'|format(result.joy) }}</li>
+      <li>Sadness: {{ '%.4f'|format(result.sadness) }}</li>
+    </ul>
+    <p><strong>Dominant emotion:</strong> {{ result.dominant_emotion }}</p>
+  </section>
+  {% endif %}
+</main>
+</body>
+</html>
